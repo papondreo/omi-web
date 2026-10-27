@@ -1,0 +1,46 @@
+@use "src/shared/styles/typography" as *;
+
+.main_content {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+
+  @media (max-width: 768px) {
+    padding: 0 16px;
+    gap: 24px;
+  }
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  h1 {
+    @include h2;
+  }
+
+  p {
+    @include text_m;
+    color: var(--color-text-secondary);
+  }
+}
+
+.error {
+  @include text_m;
+  color: var(--color-error);
+}
+
+.empty_message {
+  padding: 40px;
+  border-radius: var(--border-radius-lg);
+  background: var(--color-bg-secondary);
+
+  h3 {
+    @include h4;
+  }
+
+  .accent {
+    color: var(--color-primary);
+  }
+}

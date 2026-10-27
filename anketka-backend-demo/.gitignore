@@ -1,0 +1,9 @@
+/vendor/
+/.psalm-cache
+/.phpunit.cache
+/phpunit.xml
+.idea
+.vscode
+
+# внутренние заметки, не для кандидата
+INTERNAL-SECURITY-NOTES.md

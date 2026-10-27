@@ -1,0 +1,135 @@
+@import "@/shared/styles/typography.scss";
+
+.cards_swiper {
+    width: 100%;
+}
+
+.swiper_header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+    gap: 16px;
+
+    @media (max-width: 768px) {
+        align-items: center;
+        gap: 16px;
+        padding: 0 16px;
+        margin-bottom: unset;
+    }
+}
+
+.header_content {
+    flex: 1;
+}
+
+.header_navigation {
+    display: flex;
+    gap: 8px;
+
+    @media (max-width: 768px) {
+        display: none;
+    }
+
+    &.mobile_navigation {
+        @media (max-width: 768px) {
+            display: flex;
+        }
+    }
+}
+
+
+.stories_wrap {
+    position: relative;
+    width: 100%;
+}
+
+.fade_left {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 70px;
+    background: linear-gradient(to right, rgba(255, 255, 255, 1) 3%, rgba(255, 255, 255, 0) 70%);
+    z-index: 2;
+    pointer-events: none;
+
+    @media (max-width: 768px) {
+        display: none;
+    }
+}
+
+
+.stories {
+    display: flex;
+    gap: 16px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior-x: contain;
+
+    /* Скрываем скроллбар */
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+
+    &::-webkit-scrollbar {
+        display: none;
+    }
+
+    /* Предотвращаем выделение текста при drag */
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+
+    /* На планшетах/мобилках добавим внутренние поля, чтобы крайние карточки не прилипали к краю экрана */
+    @media (max-width: 1024px) {
+        padding: 0 16px;
+    }
+
+    /* На очень узких экранах делаем слайд на всю ширину */
+    @media (max-width: 430px) {
+        & .swiper_slide {
+            width: 100%;
+            flex: 0 0 100%;
+        }
+    }
+
+    /* iPad mini и похожие: две карточки в экран */
+    @media (min-width: 431px) and (max-width: 768px) {
+        & .swiper_slide {
+            width: 360px;
+            flex: 0 0 360px;
+        }
+    }
+}
+
+.swiper_slide {
+    flex: 0 0 auto;
+
+}
+
+.swiper_slide_spacer {
+    flex: 0 0 auto;
+    width: calc(45% - 8px);
+    min-width: calc(45% - 8px);
+    height: 1px;
+    opacity: 0;
+    pointer-events: none;
+
+    @media (max-width: 768px) {
+        display: none;
+    }
+
+}
+
+.nav_button {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+}

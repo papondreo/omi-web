@@ -1,0 +1,67 @@
+services:
+
+  php-fpm:
+    build:
+      context: .
+      dockerfile: docker/php-fpm.Dockerfile
+    image: anketka_demo_php_fpm:8.3
+    container_name: anketka_demo_php_fpm
+    restart: unless-stopped
+    working_dir: /var/www/html
+    volumes:
+      - ./:/var/www/html
+    # php-fpm работает от www-data и пишет в data/ (логи, кэш, прокси Doctrine).
+    # На Linux примонтированная папка принадлежит хосту, поэтому открываем её на запись
+    command: sh -c "chmod -R a+rwX /var/www/html/data && exec php-fpm"
+    depends_on:
+      mysql:
+        condition: service_healthy
+
+  nginx:
+    image: nginx:alpine
+    container_name: anketka_demo_nginx
+    restart: unless-stopped
+    ports:
+      - "8350:80"
+    volumes:
+      - ./:/var/www/html
+      - ./docker/nginx.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - php-fpm
+
+  mysql:
+    image: mysql:8.0
+    container_name: anketka_demo_mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: app
+      MYSQL_USER: app
+      MYSQL_PASSWORD: app
+    ports:
+      - "127.0.0.1:3307:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "127.0.0.1", "-proot"]
+      interval: 3s
+      timeout: 3s
+      retries: 30
+
+  # Одноразовый контейнер для composer, миграций, тестов и psalm:
+  #   docker compose run --rm composer <команда>
+  composer:
+    build:
+      context: .
+      dockerfile: docker/composer.Dockerfile
+    image: anketka_demo_composer:8.3
+    volumes:
+      - ./:/app
+    environment:
+      - COMPOSER_PROCESS_TIMEOUT=0
+    depends_on:
+      mysql:
+        condition: service_healthy
+
+volumes:
+  mysql_data:

@@ -1,0 +1,55 @@
+@use "@/shared/styles/typography.scss" as *;
+
+.survey_card_skeleton {
+    width: 375px;
+    height: 430px;
+    border-radius: 34px;
+    padding: 32px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    text-align: center;
+    background: var(--color-bg-secondary);
+
+    @media (max-width: 768px) {
+        width: 290px;
+        height: 350px;
+    }
+
+    .skeleton_title {
+        width: 200px;
+        height: 20px;
+        background: var(--skeleton-shimmer);
+        border-radius: 4px;
+        animation: pulse 1.5s ease-in-out infinite;
+    }
+
+    .skeleton_button {
+        width: 140px;
+        height: 40px;
+        background: var(--skeleton-shimmer);
+        border-radius: 8px;
+        animation: pulse 1.5s ease-in-out infinite;
+    }
+
+    .skeleton_description {
+        width: 180px;
+        height: 16px;
+        background: var(--skeleton-shimmer);
+        border-radius: 4px;
+        animation: pulse 1.5s ease-in-out infinite;
+    }
+}
+
+@keyframes pulse {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.5;
+    }
+}

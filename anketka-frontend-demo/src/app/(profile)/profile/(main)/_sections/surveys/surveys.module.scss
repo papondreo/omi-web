@@ -1,0 +1,19 @@
+@use "@/shared/styles/typography.scss" as *;
+
+.surveys {
+  width: 100%;
+}
+
+.section_title {
+  @include h3;
+  color: #181819;
+  margin: 0;
+}
+
+.header_content {
+  margin-bottom: 24px;
+
+  @media (max-width: 768px) {
+    margin-bottom: 12px;
+  }
+}

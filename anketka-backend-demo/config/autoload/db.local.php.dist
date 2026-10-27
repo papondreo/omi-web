@@ -1,0 +1,18 @@
+<?php
+
+/**
+ * Шаблон подключения к БД. Скопируйте в db.local.php (он в .gitignore).
+ * Значения ниже совпадают с сервисом mysql из docker-compose.yml.
+ */
+
+declare(strict_types=1);
+
+return [
+    'db' => [
+        'host' => 'mysql',
+        'port' => 3306,
+        'dbname' => 'app',
+        'user' => 'app',
+        'password' => 'app',
+    ],
+];

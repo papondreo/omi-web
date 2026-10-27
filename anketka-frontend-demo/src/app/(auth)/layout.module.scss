@@ -1,0 +1,95 @@
+@use "src/shared/styles/typography" as *;
+
+.auth_layout {
+  min-height: 100vh;
+
+  display: flex;
+  flex-direction: column;
+
+  :global(.auth_form) {
+    width: 100%;
+    max-width: 448px;
+    padding: 16px;
+    margin: 0 auto;
+    margin-top: 68px;
+    margin-bottom: 60px;
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 24px;
+
+    :global(.header) {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+
+      h1 {
+        @include h2;
+        text-align: center;
+
+        @media (max-width: 768px) {
+          text-align: left;
+        }
+      }
+
+      h2 {
+        @include h3;
+        text-align: center;
+
+        @media (max-width: 768px) {
+          text-align: left;
+        }
+      }
+
+      p {
+        @include text_m;
+        opacity: 0.5;
+        text-align: center;
+
+        @media (max-width: 768px) {
+          text-align: left;
+        }
+      }
+    }
+
+    :global(.inputs) {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    :global(.global_error) {
+      color: var(--color-error);
+
+      a {
+        text-decoration: underline;
+      }
+    }
+
+    :global(.agreement) {
+      margin: 0;
+    }
+
+    :global(.actions) {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+
+      :global(.terms) {
+        color: #4a4a4a;
+        text-align: center;
+
+        /* Desktop/Text S | 14 reg */
+        font-size: 14px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 140%; /* 19.6px */
+      }
+    }
+  }
+}
+
+.footer {
+  margin-top: auto;
+}

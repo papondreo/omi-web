@@ -1,0 +1,13 @@
+# Локальный запуск production-сборки. В бою образ не собирается на сервере:
+# CI пушит его в GitHub Container Registry, а на сервере делается pull и up -d
+services:
+  front:
+    build:
+      context: .
+      args:
+        BUILD_ENV: production
+    image: anketka_demo_front
+    container_name: anketka_demo_front
+    restart: unless-stopped
+    ports:
+      - "3000:3000"

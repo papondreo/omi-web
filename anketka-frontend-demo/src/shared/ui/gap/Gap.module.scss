@@ -1,0 +1,25 @@
+@use '@/shared/styles/typography' as *;
+
+.gap {
+  flex-shrink: 0;
+}
+
+// Размеры для вертикального отступа
+.vertical {
+  &.xs { height: var(--spacing-xs); }
+  &.sm { height: var(--spacing-sm); }
+  &.md { height: var(--spacing-md); }
+  &.lg { height: var(--spacing-lg); }
+  &.xl { height: var(--spacing-xl); }
+  &.xxl { height: var(--spacing-xxl); }
+}
+
+// Размеры для горизонтального отступа
+.horizontal {
+  &.xs { width: var(--spacing-xs); }
+  &.sm { width: var(--spacing-sm); }
+  &.md { width: var(--spacing-md); }
+  &.lg { width: var(--spacing-lg); }
+  &.xl { width: var(--spacing-xl); }
+  &.xxl { width: var(--spacing-xxl); }
+}

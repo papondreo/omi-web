@@ -1,0 +1,29 @@
+@use "src/shared/styles/typography" as *;
+
+.page_footer {
+  background: var(--color-bg-secondary);
+}
+
+.container {
+  max-width: calc(var(--container-max-width) + 32px);
+  margin: 0 auto;
+  padding: 32px 16px;
+
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+  }
+}
+
+.copyright {
+  @include text_s;
+  color: var(--color-text-secondary);
+}
+
+.link {
+  @include text_s;
+  text-decoration: underline;
+}

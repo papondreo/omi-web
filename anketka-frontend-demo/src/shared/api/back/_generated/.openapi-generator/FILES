@@ -1,0 +1,14 @@
+.openapi-generator-ignore
+apis/AuthApi.ts
+apis/SurveyApi.ts
+apis/index.ts
+index.ts
+models/ErrorResponseDto.ts
+models/GetSurveysResponseDto.ts
+models/LoginRequestDto.ts
+models/LoginResponseDto.ts
+models/RegisterRequestDto.ts
+models/RegisterResponseDto.ts
+models/SurveyDto.ts
+models/index.ts
+runtime.ts

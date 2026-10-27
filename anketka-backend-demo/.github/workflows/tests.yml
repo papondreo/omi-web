@@ -1,0 +1,26 @@
+name: Tests
+
+on: [push, pull_request]
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Build composer image
+        run: docker compose build composer
+
+      - name: Install dependencies
+        run: docker compose run --rm -T composer install --no-interaction --no-progress
+
+      - name: Enable development mode
+        run: docker compose run --rm -T composer development-enable
+
+      - name: Psalm
+        run: docker compose run --rm -T composer run psalm
+
+      - name: Tests
+        run: docker compose run --rm -T composer test

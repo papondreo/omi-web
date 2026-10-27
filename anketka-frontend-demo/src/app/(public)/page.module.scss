@@ -1,0 +1,84 @@
+@use "src/shared/styles/typography" as *;
+
+.page {
+  max-width: calc(var(--container-max-width) + 32px);
+  margin: 0 auto;
+  padding: 80px 16px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 80px;
+
+  @media (max-width: 768px) {
+    padding: 40px 16px;
+    gap: 40px;
+  }
+}
+
+.hero {
+  max-width: var(--container-medium-width);
+
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+
+  h1 {
+    @include h1;
+  }
+
+  p {
+    @include text_l;
+    color: var(--color-text-secondary);
+  }
+}
+
+.actions {
+  display: flex;
+  gap: 8px;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+  }
+}
+
+.steps {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.step {
+  padding: 24px;
+  border-radius: var(--border-radius-lg);
+  background: var(--color-bg-secondary);
+
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+
+  h3 {
+    @include h4;
+  }
+
+  p {
+    @include text_m;
+    color: var(--color-text-secondary);
+  }
+}
+
+.step_number {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--border-radius-full);
+  background: var(--color-primary);
+  color: var(--color-white);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+}

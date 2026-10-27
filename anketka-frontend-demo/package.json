@@ -1,0 +1,39 @@
+{
+  "name": "anketka-front-demo",
+  "version": "0.1.0",
+  "private": true,
+  "browserslist": [
+    "chrome >= 90",
+    "firefox >= 88",
+    "safari >= 14",
+    "edge >= 90"
+  ],
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "typecheck": "tsc --noEmit",
+    "gen:api": "openapi-generator-cli generate -i http://localhost:8350/api/docs -g typescript-fetch -t ./templates/openapi-swr -o ./generated-api --additional-properties useSingleRequestParameter=false --additional-properties enumPropertyNaming=original --additional-properties=typescriptThreePlus=true && rm -rf src/shared/api/back/_generated && mv ./generated-api src/shared/api/back/_generated && prettier --write src/shared/api"
+  },
+  "dependencies": {
+    "classnames": "^2.5.1",
+    "critters": "^0.0.23",
+    "lucide-react": "^0.535.0",
+    "next": "^15.3.9",
+    "normalize.css": "^8.0.1",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "react-toastify": "^11.0.5",
+    "sass": "^1.87.0",
+    "swr": "^2.3.3",
+    "typograf": "^7.4.4"
+  },
+  "devDependencies": {
+    "@openapitools/openapi-generator-cli": "^2.19.1",
+    "@types/node": "^20.17.31",
+    "@types/react": "^19.1.2",
+    "@types/react-dom": "^19.1.2",
+    "prettier": "^3.5.3",
+    "typescript": "^5.8.3"
+  }
+}

@@ -1,0 +1,53 @@
+@use "src/shared/styles/typography" as *;
+
+.survey_page {
+  max-width: var(--container-narrow-width);
+
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+
+  @media (max-width: 768px) {
+    padding: 0 16px;
+  }
+
+  h1 {
+    @include h2;
+  }
+}
+
+.number {
+  @include text_m;
+  color: var(--color-text-muted);
+}
+
+.description {
+  @include text_l;
+  color: var(--color-text-secondary);
+}
+
+.meta {
+  display: flex;
+  gap: 8px;
+}
+
+.meta_item {
+  @include text_s;
+  padding: 6px 12px;
+  border-radius: var(--border-radius-full);
+  background: var(--color-bg-secondary);
+}
+
+.actions {
+  margin-top: 16px;
+  display: flex;
+  gap: 8px;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+  }
+}
+
+.back {
+  align-self: flex-start;
+}

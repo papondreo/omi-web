@@ -1,0 +1,85 @@
+@import "@/shared/styles/typography.scss";
+
+.mobile_cards_swiper {
+    width: 100%;
+    margin: 0 auto;
+}
+
+.swiper_header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+    gap: 16px;
+
+    @media (max-width: 768px) {
+        flex-direction: column;
+        align-items: center;
+        gap: 16px;
+        padding: 0 16px;
+        margin-bottom: 20px;
+    }
+}
+
+.header_content {
+    flex: 1;
+}
+
+.swiper_navigation {
+    display: flex;
+    gap: 8px;
+
+    @media (max-width: 768px) {
+        align-self: flex-end;
+        display: none;
+    }
+}
+
+.nav_button {
+    min-width: 40px;
+    height: 40px;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.swiper_container {
+    width: 100%;
+    overflow: hidden;
+}
+
+.swiper_wrapper {
+    display: flex;
+    gap: 12px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    padding: 0 16px;
+
+    /* Скрываем скроллбар */
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+
+    &::-webkit-scrollbar {
+        display: none;
+    }
+
+    /* Центрируем карточку, если она одна */
+    &.single_card {
+        justify-content: center;
+        padding: 0 20px;
+    }
+}
+
+.swiper_slide {
+    flex: 0 0 auto;
+    position: relative;
+    overflow: hidden;
+
+    /* Размеры по умолчанию для карточек опросов */
+    width: 293px;
+    height: 352px;
+    border-radius: 34px;
+}

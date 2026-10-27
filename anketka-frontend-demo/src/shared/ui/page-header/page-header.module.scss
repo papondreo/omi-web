@@ -1,0 +1,39 @@
+@use "src/shared/styles/typography" as *;
+
+.page_header {
+  height: 56px;
+  border-bottom: 1px solid var(--color-border-light);
+  background: var(--color-white);
+}
+
+.container {
+  height: 100%;
+  max-width: calc(var(--container-max-width) + 32px);
+  margin: 0 auto;
+  padding: 0 16px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo {
+  @include h4;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.badge {
+  @include text_xs;
+  padding: 2px 8px;
+  border-radius: var(--border-radius-full);
+  background: var(--color-bg-secondary);
+  color: var(--color-text-secondary);
+}
+
+.buttons {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}

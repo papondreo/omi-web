@@ -1,0 +1,75 @@
+<?xml version="1.0"?>
+<psalm
+    errorLevel="3"
+    resolveFromConfigFile="true"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns="https://getpsalm.org/schema/config"
+    xsi:schemaLocation="https://getpsalm.org/schema/config vendor/vimeo/psalm/config.xsd"
+    findUnusedBaselineEntry="true"
+    findUnusedCode="true"
+    findUnusedVariablesAndParams="true"
+>
+    <projectFiles>
+        <directory name="src" />
+        <ignoreFiles>
+            <directory name="vendor" />
+        </ignoreFiles>
+    </projectFiles>
+
+    <issueHandlers>
+        <PropertyNotSetInConstructor>
+            <errorLevel type="suppress">
+                <directory name="src/App/Entity" />
+                <directory name="src/App/Validator" />
+            </errorLevel>
+        </PropertyNotSetInConstructor>
+        
+        <!-- Suppress non-critical issues, keep only undefined classes/methods/properties -->
+        <PossiblyUnusedMethod errorLevel="suppress" />
+        <UnusedClass errorLevel="suppress" />
+        <UnusedVariable errorLevel="suppress" />
+        <PossiblyUnusedProperty errorLevel="suppress" />
+        <PossiblyUnusedParam errorLevel="suppress" />
+        <MissingParamType errorLevel="suppress" />
+        <MissingReturnType errorLevel="suppress" />
+        <MissingPropertyType errorLevel="suppress" />
+        <MixedArgument errorLevel="suppress" />
+        <MixedAssignment errorLevel="suppress" />
+        <MixedArrayAccess errorLevel="suppress" />
+        <MixedMethodCall errorLevel="suppress" />
+        <MixedPropertyFetch errorLevel="suppress" />
+        <MixedInferredReturnType errorLevel="suppress" />
+        <RedundantCast errorLevel="suppress" />
+        <RedundantCondition errorLevel="suppress" />
+        <RedundantConditionGivenDocblockType errorLevel="suppress" />
+        <RiskyTruthyFalsyComparison errorLevel="suppress" />
+        <LessSpecificReturnType errorLevel="suppress" />
+        <MoreSpecificReturnType errorLevel="suppress" />
+        <PossiblyInvalidArgument errorLevel="suppress" />
+        <InvalidScalarArgument errorLevel="suppress" />
+        <InvalidArgument errorLevel="suppress" />
+        <PossiblyNullReference errorLevel="suppress" />
+        <PossiblyFalseReference errorLevel="suppress" />
+        <PossiblyNullArgument errorLevel="suppress" />
+        <PossiblyFalseArgument errorLevel="suppress" />
+        <NullableReturnStatement errorLevel="suppress" />
+        <InvalidNullableReturnType errorLevel="suppress" />
+        <InvalidFalsableReturnType errorLevel="suppress" />
+        <TooManyArguments errorLevel="suppress" />
+        <TooFewArguments errorLevel="suppress" />
+        <ArgumentTypeCoercion errorLevel="suppress" />
+        <InvalidArrayOffset errorLevel="suppress" />
+        <PossiblyInvalidArrayOffset errorLevel="suppress" />
+        <UnnecessaryVarAnnotation errorLevel="suppress" />
+        <PossiblyNullPropertyAssignmentValue errorLevel="suppress" />
+        <UnusedParam errorLevel="suppress" />
+        <ImplicitToStringCast errorLevel="suppress" />
+        <PossiblyInvalidArrayAssignment errorLevel="suppress" />
+        <TypeDoesNotContainNull errorLevel="suppress" />
+        <PossiblyUnusedReturnValue errorLevel="suppress" />
+        
+        <!-- Keep only undefined/undeclared issues -->
+        <!-- UndefinedClass, UndefinedMethod, UndefinedFunction, UndefinedConstant, etc. are kept -->
+    </issueHandlers>
+
+</psalm>

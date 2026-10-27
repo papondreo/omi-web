@@ -17,6 +17,19 @@ export class SurveyApiOverridden extends SurveyApi {
     return fn
   })()
 
+  useHiddenSurveys = (() => {
+    const key = () => {
+      if (!getAuthed()) throw new Error("not authed")
+      return this.hiddenSurveysRequestOpts()
+    }
+    const fetcher = (context: runtime.RequestOpts) => this.swrFetch(this.hiddenSurveysFetch(context))
+    const fn = (config?: SWRConfiguration<GetSurveysResponseDto>): SWRResponse<GetSurveysResponseDto> => {
+      return useSWR<GetSurveysResponseDto>(() => key(), fetcher, config)
+    }
+    fn.key = key
+    return fn
+  })()
+
   useSurvey = (() => {
     const key = (id: number) => {
       if (!getAuthed()) throw new Error("not authed")

@@ -23,7 +23,15 @@ import {
   SurveyDtoToJSON,
 } from "../models"
 
+export interface HideSurveyRequest {
+  id: number
+}
+
 export interface SurveyRequest {
+  id: number
+}
+
+export interface UnhideSurveyRequest {
   id: number
 }
 
@@ -31,6 +39,117 @@ export interface SurveyRequest {
  *
  */
 export class SurveyApi extends runtime.BaseAPI {
+  /**
+   */
+  protected hiddenSurveysRequestOpts = (): runtime.RequestOpts => {
+    const queryParameters: any = {}
+
+    const headerParameters: runtime.HTTPHeaders = {}
+
+    if (this.configuration && this.configuration.apiKey) {
+      headerParameters["X-API-Key"] = this.configuration.apiKey("X-API-Key") // ApiKeyAuth authentication
+    }
+
+    return {
+      path: `/api/hidden-surveys`,
+      method: "GET",
+      headers: headerParameters,
+      query: queryParameters,
+    }
+  }
+
+  /**
+   */
+  protected hiddenSurveysFetch = async (
+    context: runtime.RequestOpts,
+    initOverrides?: RequestInit,
+  ): Promise<runtime.ApiResponse<GetSurveysResponseDto>> => {
+    const response = await this.request(context, initOverrides)
+
+    return new runtime.JSONApiResponse(response, (jsonValue) => GetSurveysResponseDtoFromJSON(jsonValue))
+  }
+
+  /**
+   */
+  protected hiddenSurveysRaw = async (
+    initOverrides?: RequestInit,
+  ): Promise<runtime.ApiResponse<GetSurveysResponseDto>> => {
+    const context = this.hiddenSurveysRequestOpts()
+    return this.hiddenSurveysFetch(context, initOverrides)
+  }
+
+  /**
+   */
+  hiddenSurveys = async (initOverrides?: RequestInit): Promise<GetSurveysResponseDto> => {
+    const response = await this.hiddenSurveysRaw(initOverrides)
+    return await response.value()
+  }
+
+  /**
+   */
+  useHiddenSurveys = (() => {
+    const key = () => this.hiddenSurveysRequestOpts()
+    const fetcher = (context: runtime.RequestOpts) => this.swrFetch(this.hiddenSurveysFetch(context))
+    const fn = (config?: SWRConfiguration<GetSurveysResponseDto>): SWRResponse<GetSurveysResponseDto> => {
+      return useSWR<GetSurveysResponseDto>(() => key(), fetcher, config)
+    }
+    fn.key = key
+    return fn
+  })()
+
+  /**
+   */
+  protected hideSurveyRequestOpts = (requestParameters: HideSurveyRequest): runtime.RequestOpts => {
+    if (requestParameters.id === null || requestParameters.id === undefined) {
+      throw new runtime.RequiredError(
+        "id",
+        "Required parameter requestParameters.id was null or undefined when calling hideSurvey.",
+      )
+    }
+
+    const queryParameters: any = {}
+
+    const headerParameters: runtime.HTTPHeaders = {}
+
+    if (this.configuration && this.configuration.apiKey) {
+      headerParameters["X-API-Key"] = this.configuration.apiKey("X-API-Key") // ApiKeyAuth authentication
+    }
+
+    return {
+      path: `/api/surveys/{id}/hide`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+      method: "POST",
+      headers: headerParameters,
+      query: queryParameters,
+    }
+  }
+
+  /**
+   */
+  protected hideSurveyFetch = async (
+    context: runtime.RequestOpts,
+    initOverrides?: RequestInit,
+  ): Promise<runtime.ApiResponse<void>> => {
+    const response = await this.request(context, initOverrides)
+
+    return new runtime.VoidApiResponse(response)
+  }
+
+  /**
+   */
+  protected hideSurveyRaw = async (
+    requestParameters: HideSurveyRequest,
+    initOverrides?: RequestInit,
+  ): Promise<runtime.ApiResponse<void>> => {
+    const context = this.hideSurveyRequestOpts(requestParameters)
+    return this.hideSurveyFetch(context, initOverrides)
+  }
+
+  /**
+   */
+  hideSurvey = async (id: number, initOverrides?: RequestInit): Promise<void> => {
+    await this.hideSurveyRaw({ id: id }, initOverrides)
+  }
+
   /**
    */
   protected surveyRequestOpts = (requestParameters: SurveyRequest): runtime.RequestOpts => {
@@ -152,4 +271,57 @@ export class SurveyApi extends runtime.BaseAPI {
     fn.key = key
     return fn
   })()
+
+  /**
+   */
+  protected unhideSurveyRequestOpts = (requestParameters: UnhideSurveyRequest): runtime.RequestOpts => {
+    if (requestParameters.id === null || requestParameters.id === undefined) {
+      throw new runtime.RequiredError(
+        "id",
+        "Required parameter requestParameters.id was null or undefined when calling unhideSurvey.",
+      )
+    }
+
+    const queryParameters: any = {}
+
+    const headerParameters: runtime.HTTPHeaders = {}
+
+    if (this.configuration && this.configuration.apiKey) {
+      headerParameters["X-API-Key"] = this.configuration.apiKey("X-API-Key") // ApiKeyAuth authentication
+    }
+
+    return {
+      path: `/api/surveys/{id}/hide`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
+      method: "DELETE",
+      headers: headerParameters,
+      query: queryParameters,
+    }
+  }
+
+  /**
+   */
+  protected unhideSurveyFetch = async (
+    context: runtime.RequestOpts,
+    initOverrides?: RequestInit,
+  ): Promise<runtime.ApiResponse<void>> => {
+    const response = await this.request(context, initOverrides)
+
+    return new runtime.VoidApiResponse(response)
+  }
+
+  /**
+   */
+  protected unhideSurveyRaw = async (
+    requestParameters: UnhideSurveyRequest,
+    initOverrides?: RequestInit,
+  ): Promise<runtime.ApiResponse<void>> => {
+    const context = this.unhideSurveyRequestOpts(requestParameters)
+    return this.unhideSurveyFetch(context, initOverrides)
+  }
+
+  /**
+   */
+  unhideSurvey = async (id: number, initOverrides?: RequestInit): Promise<void> => {
+    await this.unhideSurveyRaw({ id: id }, initOverrides)
+  }
 }

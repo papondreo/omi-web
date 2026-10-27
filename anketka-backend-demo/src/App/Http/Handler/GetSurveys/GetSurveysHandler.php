@@ -9,6 +9,7 @@ use App\Http\Handler\Common\ApiKeySecurity;
 use App\Http\Handler\Common\ErrorResponseDto;
 use App\Infrastructure\Panel\PanelApiInterface;
 use App\Infrastructure\Panel\PanelSurvey;
+use App\Service\HiddenSurveyService;
 use Laminas\Diactoros\Response\JsonResponse;
 use OpenApi\Attributes\Get;
 use OpenApi\Attributes\JsonContent;
@@ -37,6 +38,7 @@ readonly class GetSurveysHandler implements RequestHandlerInterface
 {
     public function __construct(
         private PanelApiInterface      $panelApi,
+        private HiddenSurveyService    $hiddenSurveyService,
         private CacheItemPoolInterface $cache,
         private int                    $cacheTtl,
         private LoggerInterface        $logger,
@@ -63,7 +65,7 @@ readonly class GetSurveysHandler implements RequestHandlerInterface
             $cacheItem = $this->cacheTtl > 0 ? $this->cache->getItem('surveys_' . $panelistId) : null;
 
             if ($cacheItem !== null && $cacheItem->isHit()) {
-                return new JsonResponse($this->buildResponse($cacheItem->get()));
+                return new JsonResponse($this->buildResponse($cacheItem->get(), $user));
             }
 
             $surveys = $this->panelApi->getSurveys($panelistId);
@@ -73,7 +75,7 @@ readonly class GetSurveysHandler implements RequestHandlerInterface
                 $this->cache->save($cacheItem);
             }
 
-            return new JsonResponse($this->buildResponse($surveys));
+            return new JsonResponse($this->buildResponse($surveys, $user));
 
         } catch (\Exception $e) {
             $this->logger->error('Failed to load surveys', [
@@ -91,10 +93,16 @@ readonly class GetSurveysHandler implements RequestHandlerInterface
     /**
      * @param PanelSurvey[] $surveys
      */
-    private function buildResponse(array $surveys): GetSurveysResponseDto
+    private function buildResponse(array $surveys, User $user): GetSurveysResponseDto
     {
+        // Скрытые фильтруем после кэша: в кэше лежит ответ панели, и только что
+        // скрытый опрос не должен висеть в списке до истечения TTL
+        $hidden = array_flip($this->hiddenSurveyService->getHiddenIds($user));
+        $visible = array_filter($surveys, fn(PanelSurvey $survey) => !isset($hidden[$survey->id]));
+
         $response = new GetSurveysResponseDto();
-        $response->surveys = array_map(fn(PanelSurvey $survey) => SurveyDto::fromPanelSurvey($survey), $surveys);
+        // array_values: после array_filter ключи с дырами, и json_encode отдал бы объект вместо массива
+        $response->surveys = array_values(array_map(fn(PanelSurvey $survey) => SurveyDto::fromPanelSurvey($survey), $visible));
 
         return $response;
     }

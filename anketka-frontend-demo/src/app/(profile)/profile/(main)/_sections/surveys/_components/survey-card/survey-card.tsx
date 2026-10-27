@@ -2,6 +2,7 @@ import React, { CSSProperties, memo } from "react"
 import cx from "classnames"
 import Link from "next/link"
 import Image from "next/image"
+import { X } from "lucide-react"
 import { SurveyDto } from "@/shared/api/back"
 import { Button } from "@/shared/ui/button"
 import { pluralize } from "@/shared/lib/pluralize"
@@ -11,6 +12,7 @@ import styles from "./survey-card.module.scss"
 
 export interface ISurveyCard {
   data: SurveyDto
+  onHide?: () => void
 
   className?: string
   style?: CSSProperties
@@ -35,6 +37,23 @@ export const SurveyCard = memo((props: ISurveyCard) => {
       href={href}
       target={SURVEY_PAGE_ENABLED ? undefined : "_blank"}
     >
+      {props.onHide && (
+        <button
+          type="button"
+          className={styles.hide_button}
+          aria-label="Скрыть опрос"
+          title="Скрыть опрос"
+          onClick={(e) => {
+            // Вся карточка — ссылка: без этого вместе со скрытием откроется опрос
+            e.preventDefault()
+            e.stopPropagation()
+            props.onHide!()
+          }}
+        >
+          <X size={20} />
+        </button>
+      )}
+
       <div className={styles.head}>
         <div className={styles.icon}>
           {type === "fast" && <Image src={images.fast.src} alt="Быстрый опрос" width={24} height={24} />}

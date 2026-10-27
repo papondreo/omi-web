@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Http\Handler\GetSurveys;
 
 use App\Infrastructure\Panel\PanelApiInterface;
+use App\Service\HiddenSurveyService;
 use Laminas\ServiceManager\Factory\FactoryInterface;
 use Psr\Cache\CacheItemPoolInterface;
 use Psr\Container\ContainerInterface;
@@ -19,6 +20,7 @@ class GetSurveysHandlerFactory implements FactoryInterface
 
         return new GetSurveysHandler(
             $container->get(PanelApiInterface::class),
+            $container->get(HiddenSurveyService::class),
             $container->get(CacheItemPoolInterface::class),
             $cacheTtl,
             $container->get(LoggerInterface::class),
